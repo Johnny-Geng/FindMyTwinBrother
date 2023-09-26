@@ -1,16 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     public float moveSpeed = 10.0f;
+    public float climbSpeed = 10.0f;
     public Rigidbody2D rb;
     public SpriteRenderer spriteRenderer;
-    
+
     public Shape.ShapeType currentShape = Shape.ShapeType.Circle;
     public int currentShapeSize = 2;
-    
+    public bool isClimbing = false;
+    public bool canInteract = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,9 +27,19 @@ public class PlayerController : MonoBehaviour
     {
         UpdateMovement();
     }
+    private void FixedUpdate()
+    {
+
+    }
 
     void UpdateMovement()
     {
+        if (isClimbing)
+        {
+            return;
+        }
+
+        // horizontal
         if ((Input.GetKey(KeyCode.LeftArrow) && Input.GetKey(KeyCode.RightArrow))
             || (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D)))
         {
@@ -44,6 +58,7 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity = new Vector2(0.0f, rb.velocity.y);
         }
+
     }
-    
+
 }
